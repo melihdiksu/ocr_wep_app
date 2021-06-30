@@ -1,0 +1,79 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<script>function readURL(input) {
+	if (input.files && input.files[0]) {
+
+		var reader = new FileReader();
+
+		reader.onload = function(e) {
+			$('.image-upload-wrap').hide();
+
+			$('.file-upload-image').attr('src', e.target.result);
+			$('.file-upload-content').show();
+
+			$('.image-title').html(input.files[0].name);
+		};
+
+		reader.readAsDataURL(input.files[0]);
+
+	} else {
+		removeUpload();
+	}
+}
+
+function removeUpload() {
+	$('.file-upload-input').replaceWith($('.file-upload-input').clone());
+	$('.file-upload-content').hide();
+	$('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+	$('.image-upload-wrap').addClass('image-dropping');
+});
+$('.image-upload-wrap').bind('dragleave', function () {
+	$('.image-upload-wrap').removeClass('image-dropping');
+});
+</script>
+
+<form role="form" method="POST" id="post-form" onsubmit="return false">
+	<div class="form-group">
+		<input type="text" class="form-control input-lg" name="image_url" placeholder="enter an image url..." required></center>
+	</div>
+	<button type="submit" class="btn btn-lg btn-block btn-success boom" id="search">Submit!</button>
+</form>
+
+
+<form role="form" method="POST" id="upload-form" enctype=multipart/form-data>
+	<div class="file-upload">
+		<button class="file-upload-btn" id="add" type="button" style="width:60%; margin-right:310px" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+
+		<div class="image-upload-wrap">
+			<input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="file"/>
+			<div class="drag-text">
+				<h3>Drag and drop a file or select add Image</h3>
+			</div>
+		</div>
+		<div class="file-upload-content">
+			<img class="file-upload-image" src="#" alt="your image" style="margin-right:200px"/>
+			<div class="image-title-wrap">
+				<button type="button" onclick="removeUpload()" class="remove-image" style="margin-right:200px">Remove <span class="image-title">Uploaded Image</span></button>
+			</div>
+			<div>
+					<button type="submit" class="btn btn-lg btn-block btn-success boom" style="width:36%; margin-left:80px" id="upload">Upload!</button>
+			</div>
+		</div>
+	</div>
+</form>
+
+<div id="results">
+	<h1>Results</h1>
+	<div id="results-data"></div>
+</div>
+
+
+<br><br>
+
+<div id="retry"><a href="">Again?</a></div>
+
+
+{% endblock %}

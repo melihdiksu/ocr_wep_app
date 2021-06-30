@@ -1,0 +1,21 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+    <h3>Image</h3>
+   {% if img_src %}
+     <img src="{{ img_src }}" style="max-width: 400px">
+   {% endif %}
+
+   {% if extracted_text %}
+    <h3>Results</h3>
+    <div class='well'>{{ extracted_text }}</div>
+    <a href="">Again?</a>
+   {% else %}
+     The extracted text will be displayed here
+   {% endif %}
+
+
+
+
+{% endblock %}
